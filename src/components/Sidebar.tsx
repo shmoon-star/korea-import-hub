@@ -7,29 +7,45 @@ type Item = { href: string; label: string; sub?: string };
 type Group = {
   label: string;
   items: Item[];
-  /** true면 그룹 자체를 강조 (메인 채널) */
   highlight?: boolean;
-  /** 하이라이트 그룹의 부제 */
   highlightHint?: string;
 };
 
+// 실무 흐름 순서: SCM Hub PO 발행 → Forwarder → 해상/항공 운송 → ReadyKorea → 통관 → 흐름도 → 데이터모음 → SAP → 해외지사
 const groups: Group[] = [
   {
-    label: "External Channels",
+    label: "External Channels (흐름 순)",
     items: [
-      { href: "/tools/customs-tracking", label: "Customs Tracking", sub: "수입 통관 진행 (UNI-PASS)" },
-      { href: "/tools/shipment-tracking", label: "Shipment Tracking", sub: "사선사 트래킹 (SeaVantage)" },
-      { href: "/tools/readykorea-customs", label: "ReadyKorea 통관", sub: "관세사 입력 정보 (xTrade)" },
-      { href: "/tools/forwarder", label: "Forwarder", sub: "Consolidator + Forwarder PF (TBD)" },
-      { href: "/tools/airplane-tracking", label: "Airplane Tracking", sub: "항공 화물 추적 (TBD)" },
-    ],
-  },
-  {
-    label: "★ 데이터 모음",
-    highlight: true,
-    highlightHint: "숨은 메인 — 전산이 SCM Hub로 보내는 정제 데이터 (종착지: SCM Hub)",
-    items: [
-      { href: "/data-mart", label: "데이터 모음", sub: "SCM Hub 송신용 정제 (TBD)" },
+      {
+        href: "/tools/scm-hub",
+        label: "SCM Hub",
+        sub: "PO 발행 / 단일 진실 source (TBD)",
+      },
+      {
+        href: "/tools/forwarder",
+        label: "Forwarder",
+        sub: "Consolidator + Forwarder PF (TBD)",
+      },
+      {
+        href: "/tools/shipment-tracking",
+        label: "Shipment Tracking",
+        sub: "해상 사선사 트래킹 (SeaVantage)",
+      },
+      {
+        href: "/tools/airplane-tracking",
+        label: "Airplane Tracking",
+        sub: "항공 화물 추적 (TBD)",
+      },
+      {
+        href: "/tools/readykorea-customs",
+        label: "ReadyKorea 통관",
+        sub: "관세사 입력 정보 (xTrade)",
+      },
+      {
+        href: "/tools/customs-tracking",
+        label: "Customs Tracking",
+        sub: "수입 통관 진행 (UNI-PASS)",
+      },
     ],
   },
   {
@@ -37,19 +53,39 @@ const groups: Group[] = [
     highlight: true,
     highlightHint: "표면적 메인 — 실무자가 매일 보는 통합 화면",
     items: [
-      { href: "/cargo-flow", label: "수입 화물 흐름도", sub: "Forwarder → 통관 통합 view (TBD)" },
+      {
+        href: "/cargo-flow",
+        label: "수입 화물 흐름도",
+        sub: "10단계 통합 view (TBD)",
+      },
     ],
   },
   {
-    label: "Overseas · 해외지사",
+    label: "★ 데이터 모음",
+    highlight: true,
+    highlightHint: "숨은 메인 — 전산이 SCM Hub로 보내는 정제 데이터 (운영+원가)",
     items: [
-      { href: "/overseas-flow", label: "해외지사 화물 흐름도", sub: "통관 제외 / PLM PO (TBD)" },
+      { href: "/data-mart", label: "데이터 모음", sub: "SCM Hub 송신용 정제 (TBD)" },
     ],
   },
   {
     label: "ERP",
     items: [
-      { href: "/tools/sap", label: "SAP", sub: "SCM Hub → SAP 경로 (Hub 직접 송신 X)" },
+      {
+        href: "/tools/sap",
+        label: "SAP",
+        sub: "SCM Hub → SAP 경로 (Hub 직접 송신 X)",
+      },
+    ],
+  },
+  {
+    label: "Overseas · 해외지사",
+    items: [
+      {
+        href: "/overseas-flow",
+        label: "해외지사 화물 흐름도",
+        sub: "통관 제외 / PLM PO (TBD)",
+      },
     ],
   },
 ];

@@ -40,6 +40,15 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
   },
   {
     num: 2,
+    shortLabel: "PO 전달",
+    label: "PO 전달 (SCM Hub → Forwarder)",
+    source: "SCM Hub → Forwarder",
+    sourceBadge: "scmhub",
+    description:
+      "발행된 PO를 Forwarder PF로 전달 (push 또는 Forwarder가 SCM Hub에서 pull). 공급사가 CRD를 입력할 수 있는 상태가 됨",
+  },
+  {
+    num: 3,
     shortLabel: "CRD",
     label: "CRD 입력",
     source: "Forwarder (E2E)",
@@ -47,7 +56,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "공급사가 PO/SKU별 CRD/생산일/수량/CBM/중량 입력",
   },
   {
-    num: 3,
+    num: 4,
     shortLabel: "Booking",
     label: "Booking 확정",
     source: "Forwarder (E2E)",
@@ -55,7 +64,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "MBL/HBL 발급 + Vessel/POL/POD/ETD/ETA + Booking Confirmation",
   },
   {
-    num: 4,
+    num: 5,
     shortLabel: "출항",
     label: "출항 (Loaded)",
     source: "SeaVantage",
@@ -63,7 +72,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "POL ATD / Container 적재 완료 / Vessel departure",
   },
   {
-    num: 5,
+    num: 6,
     shortLabel: "운송",
     label: "운송 중",
     source: "SeaVantage",
@@ -71,7 +80,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "선박 위치 추적 / 환적 (TSL/TSD) 정보 / ETA 갱신",
   },
   {
-    num: 6,
+    num: 7,
     shortLabel: "입항",
     label: "입항",
     source: "SeaVantage + UNI-PASS",
@@ -79,7 +88,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "POD ATA / 입항보고 — 한국 도착 시점부터 UNI-PASS 데이터 시작",
   },
   {
-    num: 7,
+    num: 8,
     shortLabel: "통관",
     label: "수입신고 / 통관",
     source: "ReadyKorea + UNI-PASS",
@@ -87,7 +96,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "관세사 신고 입력 (ReadyKorea) → 관세청 처리 (UNI-PASS)",
   },
   {
-    num: 8,
+    num: 9,
     shortLabel: "반출",
     label: "통관완료 / 반출",
     source: "UNI-PASS",
@@ -95,7 +104,7 @@ const STAGE_DEFS: Omit<Stage, "status" | "data" | "link">[] = [
     description: "수입신고수리 → 반출완료. cargMtNo 기준 추적",
   },
   {
-    num: 9,
+    num: 10,
     shortLabel: "입고",
     label: "입고 완료",
     source: "WMS / SCM Hub",
@@ -122,6 +131,16 @@ const EXAMPLE = {
         { key: "Brand/Season", value: "FW26 KF001" },
         { key: "총 SKU", value: "12 SKU" },
       ],
+      link: { label: "SCM Hub", href: "/tools/scm-hub" },
+    },
+    {
+      data: [
+        { key: "전달 시점", value: "2026-03-16 09:00 (PO 발행 다음날)" },
+        { key: "전달 방식", value: "SCM Hub → Forwarder PF (자동 push, TBD)" },
+        { key: "Forwarder 측 status", value: "Pending CRD" },
+        { key: "수신 확인", value: "ack 2026-03-16 10:15" },
+      ],
+      link: { label: "Forwarder", href: "/tools/forwarder" },
     },
     {
       data: [
@@ -182,8 +201,8 @@ const EXAMPLE = {
   ],
 };
 
-// 현재 진행 (active) 단계 — 0-indexed로 6 (즉 7번째)
-const ACTIVE_INDEX = 6;
+// 현재 진행 (active) 단계 — 0-indexed로 7 (즉 8번째: 수입신고/통관)
+const ACTIVE_INDEX = 7;
 const STATUSES: StageStatus[] = STAGE_DEFS.map((_, i) =>
   i < ACTIVE_INDEX ? "done" : i === ACTIVE_INDEX ? "active" : "pending",
 );
@@ -232,7 +251,8 @@ export default function CargoFlowPage() {
 
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>수입 화물 흐름도</h1>
       <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 20 }}>
-        한 PO/BL의 9단계를 외부 5개 채널 + WMS 데이터로 통합. 단계 클릭 시 해당 단계 데이터 표시.
+        한 PO/BL의 10단계를 외부 채널 + WMS 데이터로 통합. 단계 클릭 시 해당 단계 데이터 표시.
+        SCM Hub PO 발행 → Forwarder 전달 → 운송 → 통관 → 입고 완료까지.
       </p>
 
       {/* 화물 조회 */}
@@ -297,7 +317,7 @@ export default function CargoFlowPage() {
               fontSize: 13,
             }}
           >
-            {completedCount}/{STAGE_DEFS.length} 완료 · 7단계 진행 중
+            {completedCount}/{STAGE_DEFS.length} 완료 · {ACTIVE_INDEX + 1}단계 진행 중
           </span>
         </div>
 
@@ -413,7 +433,7 @@ export default function CargoFlowPage() {
       </section>
 
       {/* 흐름 단계 일반 설명 (참고) */}
-      <Section title="흐름 단계 (전체 9단계 — 참고)">
+      <Section title="흐름 단계 (전체 10단계 — 참고)">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
           {STAGE_DEFS.map((s) => {
             const badge = BADGE_COLORS[s.sourceBadge];
