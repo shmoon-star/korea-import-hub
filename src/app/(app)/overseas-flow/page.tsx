@@ -162,6 +162,79 @@ export default function OverseasFlowPage() {
         </ul>
       </section>
 
+      {/* 삼국거래 파이낸스 메커니즘 */}
+      <section
+        style={{
+          ...section,
+          background: "#eff6ff",
+          border: "1px solid #bfdbfe",
+        }}
+      >
+        <h2 style={{ ...h2, color: "#1e40af" }}>💱 삼국거래 파이낸스 메커니즘</h2>
+
+        <h3 style={h3}>계약 구조 (2단계)</h3>
+        <ul style={list}>
+          <li>
+            <strong>1차 계약</strong>: 한국 무신사 ↔ 공장 (필요 시 일본/대만 결속) — 원가/생산
+            계약
+          </li>
+          <li>
+            <strong>2차 계약</strong>: 무신사 해외지사 ↔ 한국 무신사 — 결제 계약
+          </li>
+        </ul>
+
+        <h3 style={{ ...h3, marginTop: 14 }}>물리적 화물 흐름</h3>
+        <pre style={code}>
+{`공장 (베트남/중국 등)
+   │
+   │  FOB 출하 — 한국을 거치지 않고
+   │  바로 판매국으로 직배송
+   ▼
+일본 무신사 / 대만 무신사 / 기타 해외지사
+   │
+   ▼
+판매`}
+        </pre>
+
+        <h3 style={{ ...h3, marginTop: 14 }}>가격 구성 (해외지사 → 한국 무신사 결제)</h3>
+        <ul style={list}>
+          <li>
+            <strong>원가</strong> (1차 계약 기준)
+          </li>
+          <li>
+            <strong>+ 마크업 (Markup)</strong> — 한국 무신사 마진
+          </li>
+          <li>
+            <strong>+ 로열티</strong> — 브랜드/IP 사용료 등
+          </li>
+          <li>
+            <strong>+ Forwarder 운임/부대비</strong> (정산 분배)
+          </li>
+        </ul>
+
+        <h3 style={{ ...h3, marginTop: 14 }}>장점 (이 구조의 가치)</h3>
+        <ul style={list}>
+          <li>
+            ⚡ <strong>스피드</strong>: 공장→판매국 직배송 → 한국 경유 미입항 → 빠른 상품 회전
+          </li>
+          <li>
+            💰 <strong>관세 메리트</strong>: 받는 쪽(해외지사)·사는 쪽(한국 무신사) 모두 통관
+            중복 회피로 세금 부담 감소
+          </li>
+          <li>
+            🛡️ <strong>위험 헤징</strong>: 마크업·로열티가 양쪽에 분배 — 환율/재고/책임 분산
+          </li>
+          <li>
+            📦 <strong>재고 압력 감소</strong>: 한국 창고에 잠시 머무를 필요 없음
+          </li>
+        </ul>
+
+        <p style={{ ...p, marginTop: 12, color: "#1e3a8a", fontSize: 12 }}>
+          → 이 메커니즘이 작동하려면 <strong>마크업·로열티의 PO 시점 사전 정의</strong>가 필요.
+          그래야 받는 쪽이 정확한 신고가격으로 통관하고, 한국 쪽도 정확한 매출 인식 가능.
+        </p>
+      </section>
+
       {/* PO 연동 매트릭스 */}
       <section style={section}>
         <h2 style={h2}>PO 연동 매트릭스 (현실 반영)</h2>
@@ -330,6 +403,95 @@ export default function OverseasFlowPage() {
         </ul>
       </Section>
 
+      <Section title="🚧 결정 포인트 — PO를 어디서 관리할 것인가">
+        <p style={p}>
+          현재 해외지사 운영의 가장 큰 한계는 <strong>PO 진실 source 부재</strong>. 우리 물류
+          가시화는 어떤 키 위에 얹혀야 할지 정해져야 시작 가능. <strong>경영/시스템 차원의 결정 필요</strong>.
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 10,
+            marginTop: 12,
+          }}
+        >
+          <DecisionCard
+            title="옵션 A. SAP"
+            verdict="❌ 현실적 X"
+            verdictColor="#b91c1c"
+            pros={["회계·원가 통합 표준", "한국 SAP와 schema 일관"]}
+            cons={[
+              "해외법인에 SAP 자체 부재 (일본/대만)",
+              "SAP MM 전사 미사용 결정",
+              "도입 비용·시간 막대",
+            ]}
+          />
+          <DecisionCard
+            title="옵션 B. PLM"
+            verdict="⚠️ 부분 가능"
+            verdictColor="#92400e"
+            pros={["무탠 일부 케이스는 이미 PLM에 올라감", "디자인/스펙 데이터와 자연스럽게 연계"]}
+            cons={[
+              "PLM 전사 PO 합의 미확정",
+              "PLM PO ≠ SAP MM (매입 추적/원가 미흡)",
+              "무탠 외 일반 매입은 PLM 미경유",
+            ]}
+          />
+          <DecisionCard
+            title="옵션 C. SCM Hub"
+            verdict="🟡 검토 가능"
+            verdictColor="#ca8a04"
+            pros={[
+              "국내 PO 단일화 진행 중 (2026년)",
+              "WMS·재고와 통합 관리",
+              "우리 hub와 직결 — 데이터 흐름 자연스러움",
+            ]}
+            cons={[
+              "현재 SCM Hub PO는 국내 한정",
+              "해외지사 ERP와 별도 동기화 필요",
+              "삼국거래 결제 컨텍스트 미지원",
+            ]}
+          />
+          <DecisionCard
+            title="옵션 D. 해외지사 자체 ERP"
+            verdict="🟢 분권 가능"
+            verdictColor="#166534"
+            pros={[
+              "해외지사 회계 컨텍스트와 직결",
+              "삼국거래 결제·세금 자연 처리",
+              "각 지사 독립 운영 가능",
+            ]}
+            cons={[
+              "지사마다 ERP 다를 가능성 (통합 X)",
+              "한국 본사 가시성 별도 작업 필요",
+              "마크업·로열티 합의 매번 필요",
+            ]}
+          />
+        </div>
+
+        <p
+          style={{
+            ...p,
+            marginTop: 14,
+            color: "#374151",
+            background: "#fef3c7",
+            border: "1px solid #fde68a",
+            padding: "10px 12px",
+            borderRadius: 6,
+          }}
+        >
+          💡 <strong>선결 과제</strong>: 위 4가지 중 어느 곳이 PO 진실 source가 될지 경영/시스템
+          담당자 결정 필요. 결정 전엔 우리 hub는 <strong>Forwarder Booking을 임시 키</strong>로
+          사용하면서 결정 후 키 매핑만 추가하면 됨. 즉 결정을 기다리느라 진행 멈출 필요는 없음.
+        </p>
+
+        <p style={{ ...p, marginTop: 8, color: "#6b7280", fontSize: 12 }}>
+          ※ 결정이 정해지면 이 섹션에 결정 사항/날짜/담당자 기록 → 변경 이력 추적.
+        </p>
+      </Section>
+
       <Section title="다음 액션 (현실 반영 우선순위)">
         <ol style={list}>
           <li>
@@ -370,6 +532,59 @@ export default function OverseasFlowPage() {
   );
 }
 
+function DecisionCard({
+  title,
+  verdict,
+  verdictColor,
+  pros,
+  cons,
+}: {
+  title: string;
+  verdict: string;
+  verdictColor: string;
+  pros: string[];
+  cons: string[];
+}) {
+  return (
+    <div
+      style={{
+        border: "1px solid #e5e7eb",
+        borderRadius: 8,
+        padding: 12,
+        background: "white",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          marginBottom: 8,
+        }}
+      >
+        <strong style={{ fontSize: 13, color: "#111827" }}>{title}</strong>
+        <span style={{ fontSize: 11, fontWeight: 700, color: verdictColor }}>{verdict}</span>
+      </div>
+      <div style={{ fontSize: 11, marginBottom: 6 }}>
+        <span style={{ color: "#15803d", fontWeight: 700 }}>장점</span>
+        <ul style={{ margin: "4px 0 0", paddingLeft: 18, color: "#374151", lineHeight: 1.5 }}>
+          {pros.map((s, i) => (
+            <li key={i}>{s}</li>
+          ))}
+        </ul>
+      </div>
+      <div style={{ fontSize: 11 }}>
+        <span style={{ color: "#b91c1c", fontWeight: 700 }}>단점</span>
+        <ul style={{ margin: "4px 0 0", paddingLeft: 18, color: "#374151", lineHeight: 1.5 }}>
+          {cons.map((s, i) => (
+            <li key={i}>{s}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function Tbd({ children }: { children: React.ReactNode }) {
   return (
     <span
@@ -403,6 +618,21 @@ const list: React.CSSProperties = {
   lineHeight: 1.7,
   color: "#374151",
   margin: 0,
+};
+const h3: React.CSSProperties = {
+  fontSize: 12.5,
+  fontWeight: 700,
+  color: "#1e40af",
+  margin: "8px 0 6px",
+};
+const code: React.CSSProperties = {
+  background: "#0f172a",
+  color: "#e2e8f0",
+  padding: 12,
+  borderRadius: 6,
+  fontSize: 11,
+  whiteSpace: "pre-wrap",
+  margin: "4px 0 0",
 };
 const tbl: React.CSSProperties = { width: "100%", borderCollapse: "collapse", fontSize: 12.5 };
 const tr: React.CSSProperties = { borderBottom: "1px solid #f3f4f6" };
