@@ -4,11 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type Item = { href: string; label: string; sub?: string };
-type Group = { label: string; items: Item[] };
+type Group = {
+  label: string;
+  items: Item[];
+  /** true면 그룹 자체를 강조 (메인 채널) */
+  highlight?: boolean;
+  /** 하이라이트 그룹의 부제 */
+  highlightHint?: string;
+};
 
 const groups: Group[] = [
   {
-    label: "Tools",
+    label: "External Channels",
     items: [
       { href: "/tools/customs-tracking", label: "Customs Tracking", sub: "수입 통관 진행 (UNI-PASS)" },
       { href: "/tools/shipment-tracking", label: "Shipment Tracking", sub: "사선사 트래킹 (SeaVantage)" },
@@ -18,9 +25,31 @@ const groups: Group[] = [
     ],
   },
   {
+    label: "★ 데이터 모음",
+    highlight: true,
+    highlightHint: "숨은 메인 — 전산이 SAP/SCM Hub로 보내는 정제 데이터",
+    items: [
+      { href: "/data-mart", label: "데이터 모음", sub: "SAP/SCM Hub 송신용 정제 (TBD)" },
+    ],
+  },
+  {
+    label: "★ 실무 확인용",
+    highlight: true,
+    highlightHint: "표면적 메인 — 실무자가 매일 보는 통합 화면",
+    items: [
+      { href: "/cargo-flow", label: "수입 화물 흐름도", sub: "Forwarder → 통관 통합 view (TBD)" },
+    ],
+  },
+  {
+    label: "Overseas · 해외지사",
+    items: [
+      { href: "/overseas-flow", label: "해외지사 화물 흐름도", sub: "통관 제외 / PLM PO (TBD)" },
+    ],
+  },
+  {
     label: "ERP",
     items: [
-      { href: "/tools/sap", label: "SAP", sub: "SAP PO 연동 (TBD)" },
+      { href: "/tools/sap", label: "SAP", sub: "사내 SCM Hub 경유 송신 (TBD)" },
     ],
   },
 ];
@@ -31,7 +60,7 @@ export default function Sidebar() {
   function isActive(href: string) {
     const allHrefs = groups.flatMap((g) => g.items.map((i) => i.href));
     const moreSpecific = allHrefs.some(
-      (h) => h !== href && h.startsWith(href + "/") && pathname.startsWith(h)
+      (h) => h !== href && h.startsWith(href + "/") && pathname.startsWith(h),
     );
     if (moreSpecific) return false;
     return pathname === href || pathname.startsWith(href + "/");
@@ -40,8 +69,8 @@ export default function Sidebar() {
   return (
     <aside
       style={{
-        width: 220,
-        minWidth: 220,
+        width: 240,
+        minWidth: 240,
         height: "100vh",
         position: "sticky",
         top: 0,
@@ -69,72 +98,101 @@ export default function Sidebar() {
 
       {/* 메인 메뉴 */}
       <nav style={{ flex: 1, padding: "8px" }}>
-        {groups.map((group) => (
-          <div key={group.label} style={{ marginBottom: 2 }}>
+        {groups.map((group) => {
+          const isHighlight = group.highlight;
+          return (
             <div
+              key={group.label}
               style={{
-                fontSize: 10,
-                fontWeight: 800,
-                color: "#6b7280",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                padding: "10px 10px 4px",
+                marginBottom: 4,
+                ...(isHighlight
+                  ? {
+                      background: "#fffbeb",
+                      border: "1px solid #fde68a",
+                      borderRadius: 8,
+                      padding: "4px 4px 6px",
+                    }
+                  : {}),
               }}
             >
-              {group.label}
-            </div>
-            {group.items.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
+              <div
+                style={{
+                  fontSize: 10,
+                  fontWeight: 800,
+                  color: isHighlight ? "#92400e" : "#6b7280",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  padding: isHighlight ? "8px 8px 2px" : "10px 10px 4px",
+                }}
+              >
+                {group.label}
+              </div>
+              {group.highlightHint && (
+                <div
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "6px 10px 6px 18px",
-                    borderRadius: 7,
-                    textDecoration: "none",
-                    marginBottom: 1,
-                    borderLeft: active ? "3px solid #111827" : "3px solid transparent",
-                    background: active ? "#e5e7eb" : "transparent",
-                    transition: "background 0.1s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) e.currentTarget.style.background = "#f0f0f0";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) e.currentTarget.style.background = "transparent";
+                    fontSize: 9.5,
+                    color: "#b45309",
+                    padding: "0 8px 4px",
+                    lineHeight: 1.3,
+                    fontStyle: "italic",
                   }}
                 >
-                  <span
+                  {group.highlightHint}
+                </div>
+              )}
+              {group.items.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
                     style={{
-                      fontSize: 13.5,
-                      fontWeight: active ? 700 : 500,
-                      color: active ? "#111827" : "#374151",
-                      lineHeight: 1.3,
+                      display: "flex",
+                      flexDirection: "column",
+                      padding: "6px 10px 6px 18px",
+                      borderRadius: 7,
+                      textDecoration: "none",
+                      marginBottom: 1,
+                      borderLeft: active ? "3px solid #111827" : "3px solid transparent",
+                      background: active ? "#e5e7eb" : "transparent",
+                      transition: "background 0.1s",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!active) e.currentTarget.style.background = "#f0f0f0";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!active) e.currentTarget.style.background = "transparent";
                     }}
                   >
-                    {item.label}
-                  </span>
-                  {item.sub && (
                     <span
                       style={{
-                        fontSize: 10.5,
-                        fontWeight: 400,
-                        color: active ? "#6b7280" : "#9ca3af",
+                        fontSize: 13.5,
+                        fontWeight: active ? 700 : 500,
+                        color: active ? "#111827" : "#374151",
                         lineHeight: 1.3,
-                        marginTop: 1,
                       }}
                     >
-                      {item.sub}
+                      {item.label}
                     </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-        ))}
+                    {item.sub && (
+                      <span
+                        style={{
+                          fontSize: 10.5,
+                          fontWeight: 400,
+                          color: active ? "#6b7280" : "#9ca3af",
+                          lineHeight: 1.3,
+                          marginTop: 1,
+                        }}
+                      >
+                        {item.sub}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          );
+        })}
       </nav>
     </aside>
   );
