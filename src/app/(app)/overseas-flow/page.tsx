@@ -79,7 +79,7 @@ export default function OverseasFlowPage() {
           </li>
           <li>
             중국·JV 같은 대규모는 자체 인력으로 관리 가능. 소규모 해외지사(일본/대만/베트남 등)는
-            <strong> 무역조직(한국)이 생산직 관리를 대신</strong> 해줘야 함
+            <strong> 무역조직(한국)이 생산지 관리를 대신</strong> 해줘야 함
           </li>
           <li>
             소규모 해외지사들은 <strong>FOB 거래</strong>를 원하는데, 직접 소싱·콘솔리데이션
@@ -110,13 +110,13 @@ export default function OverseasFlowPage() {
             ["SAP MM", "❌ 사용 안 함 (전사 결정). 해외법인은 더더욱 SAP 자체가 없음"],
             [
               "PLM PO",
-              "⚠️ 가정 단계 — PLM에서 오더가 올라온다는 합의/보장이 아직 없음. 본 것도 Mootan 일부 케이스",
+              "⚠️ 가정 단계 — PLM에서 오더가 올라온다는 합의/보장이 아직 없음. 본 것도 무탠 일부 케이스",
             ],
-            ["PLM PO ≠ SAP MM", "PLM PO는 PMM을 대체할 수 없음. 매입 추적/원가 회계 기능 부재"],
+            ["PLM PO ≠ SAP MM", "PLM PO는 SAP MM을 대체할 수 없음. 매입 추적/원가 회계 기능 부재"],
             ["일본 / 대만", "SAP 자체를 안 씀 → 해외법인 매입의 화물 추적 외 전산화 불가"],
             [
-              "Mootan 외 매입",
-              "Mootan 외의 일반 매입은 PLM에도 안 올라올 가능성 높음 — 추적 사각지대",
+              "무탠 외 매입",
+              "무탠 외의 일반 매입은 PLM에도 안 올라올 가능성 높음 — 추적 사각지대",
             ],
           ].map(([k, v], i) => (
             <div key={i} style={{ display: "contents" }}>
@@ -221,7 +221,7 @@ export default function OverseasFlowPage() {
                 <Tbd>국내 사용 여부 TBD</Tbd>
               </Td>
               <Td>
-                <Tbd>가정 단계 — Mootan 일부만 PLM에 올라감. SAP MM 대체 불가</Tbd>
+                <Tbd>가정 단계 — 무탠 일부만 PLM에 올라감. SAP MM 대체 불가</Tbd>
               </Td>
               <Td>전사적으로 PLM 오더 올라온다는 합의 미확정</Td>
             </tr>
