@@ -12,6 +12,7 @@ const groups: Group[] = [
     items: [
       { href: "/tools/customs-tracking", label: "Customs Tracking", sub: "수입 통관 진행 (UNI-PASS)" },
       { href: "/tools/shipment-tracking", label: "Shipment Tracking", sub: "사선사 트래킹 (SeaVantage)" },
+      { href: "/tools/readykorea-customs", label: "ReadyKorea 통관", sub: "관세사 입력 정보 (xTrade)" },
     ],
   },
 ];
