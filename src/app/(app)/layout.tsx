@@ -6,9 +6,17 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh" }}>
       <Sidebar />
-      <main style={{ flex: 1, minWidth: 0, overflowX: "auto" }}>{children}</main>
+      <main
+        style={{
+          marginLeft: 240, // 고정 사이드바 폭만큼 본문 들여쓰기
+          minWidth: 0,
+          overflowX: "auto",
+        }}
+      >
+        {children}
+      </main>
     </div>
   );
 }

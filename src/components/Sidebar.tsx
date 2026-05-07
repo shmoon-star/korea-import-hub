@@ -9,6 +9,8 @@ type Group = {
   items: Item[];
   highlight?: boolean;
   highlightHint?: string;
+  /** TBD/미확정 상태로 시각적으로 약화시킬 그룹 */
+  dim?: boolean;
 };
 
 // 실무 흐름 순서: SCM Hub PO 발행 → Forwarder → 해상/항공 운송 → ReadyKorea → 통관 → 흐름도 → 데이터모음 → SAP → 해외지사
@@ -33,7 +35,7 @@ const groups: Group[] = [
       },
       {
         href: "/tools/airplane-tracking",
-        label: "Airplane Tracking",
+        label: "Air Freight",
         sub: "항공 화물 추적 (TBD)",
       },
       {
@@ -69,7 +71,8 @@ const groups: Group[] = [
     ],
   },
   {
-    label: "ERP",
+    label: "ERP — TBD",
+    dim: true,
     items: [
       {
         href: "/tools/sap",
@@ -79,7 +82,8 @@ const groups: Group[] = [
     ],
   },
   {
-    label: "Overseas · 해외지사",
+    label: "Overseas · 해외지사 — TBD",
+    dim: true,
     items: [
       {
         href: "/overseas-flow",
@@ -108,13 +112,15 @@ export default function Sidebar() {
         width: 240,
         minWidth: 240,
         height: "100vh",
-        position: "sticky",
+        position: "fixed",
         top: 0,
+        left: 0,
         background: "#f9fafb",
         borderRight: "1px solid #e5e7eb",
         overflowY: "auto",
         display: "flex",
         flexDirection: "column",
+        zIndex: 10,
       }}
     >
       {/* 로고 */}
@@ -134,8 +140,12 @@ export default function Sidebar() {
 
       {/* 메인 메뉴 */}
       <nav style={{ flex: 1, padding: "8px" }}>
-        {groups.map((group) => {
+        {groups.map((group, gIdx) => {
           const isHighlight = group.highlight;
+          const isDim = group.dim;
+          // ERP/Overseas 그룹 위에 시각적 분리선
+          const prevGroup = gIdx > 0 ? groups[gIdx - 1] : null;
+          const showDivider = isDim && (!prevGroup || !prevGroup.dim);
           return (
             <div
               key={group.label}
@@ -149,13 +159,25 @@ export default function Sidebar() {
                       padding: "4px 4px 6px",
                     }
                   : {}),
+                ...(isDim
+                  ? {
+                      opacity: 0.55,
+                    }
+                  : {}),
+                ...(showDivider
+                  ? {
+                      marginTop: 14,
+                      paddingTop: 8,
+                      borderTop: "1px dashed #d1d5db",
+                    }
+                  : {}),
               }}
             >
               <div
                 style={{
                   fontSize: 10,
                   fontWeight: 800,
-                  color: isHighlight ? "#92400e" : "#6b7280",
+                  color: isHighlight ? "#92400e" : isDim ? "#9ca3af" : "#6b7280",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                   padding: isHighlight ? "8px 8px 2px" : "10px 10px 4px",
