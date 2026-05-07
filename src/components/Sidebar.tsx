@@ -27,9 +27,9 @@ const groups: Group[] = [
   {
     label: "★ 데이터 모음",
     highlight: true,
-    highlightHint: "숨은 메인 — 전산이 SAP/SCM Hub로 보내는 정제 데이터",
+    highlightHint: "숨은 메인 — 전산이 SCM Hub로 보내는 정제 데이터 (종착지: SCM Hub)",
     items: [
-      { href: "/data-mart", label: "데이터 모음", sub: "SAP/SCM Hub 송신용 정제 (TBD)" },
+      { href: "/data-mart", label: "데이터 모음", sub: "SCM Hub 송신용 정제 (TBD)" },
     ],
   },
   {
@@ -49,7 +49,7 @@ const groups: Group[] = [
   {
     label: "ERP",
     items: [
-      { href: "/tools/sap", label: "SAP", sub: "사내 SCM Hub 경유 송신 (TBD)" },
+      { href: "/tools/sap", label: "SAP", sub: "SCM Hub → SAP 경로 (Hub 직접 송신 X)" },
     ],
   },
 ];

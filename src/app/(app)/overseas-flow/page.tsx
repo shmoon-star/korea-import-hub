@@ -65,7 +65,7 @@ export default function OverseasFlowPage() {
 
       {/* PO 연동 매트릭스 */}
       <section style={section}>
-        <h2 style={h2}>PO 연동 매트릭스 (정리 필요)</h2>
+        <h2 style={h2}>PO 연동 매트릭스 (정정)</h2>
         <table style={tbl}>
           <thead>
             <tr style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
@@ -78,44 +78,71 @@ export default function OverseasFlowPage() {
           <tbody>
             <tr style={tr}>
               <Td>
-                <strong>SAP PO</strong>
-              </Td>
-              <Td>
-                ✅ Data Mart → SCM Hub → SAP
-              </Td>
-              <Td>
-                <Tbd>해외지사에 SAP 없음 → 송신 X</Tbd>
-              </Td>
-              <Td>해외지사 = SAP-less 환경</Td>
-            </tr>
-            <tr style={tr}>
-              <Td>
                 <strong>SCM Hub PO</strong>
               </Td>
               <Td>
-                <Tbd>국내도 SCM Hub PO 사용 여부 TBD</Tbd>
+                <span
+                  style={{
+                    display: "inline-block",
+                    padding: "2px 6px",
+                    background: "#dcfce7",
+                    color: "#166534",
+                    borderRadius: 4,
+                    fontSize: 11,
+                    fontWeight: 700,
+                  }}
+                >
+                  ✅ 1순위 / 단일화
+                </span>{" "}
+                — 2026년 SCM Hub PO 단일화 목표. 우리 hub의 진실 source
               </Td>
               <Td>
-                <Tbd>주 PO 채널 후보 1</Tbd>
+                <Tbd>후보 — 사내 사양 확인 필요</Tbd>
               </Td>
-              <Td>사내 사양 확인 필요</Td>
+              <Td>국내 데이터 모음의 종착지가 SCM Hub</Td>
+            </tr>
+            <tr style={tr}>
+              <Td>
+                <strong>SAP PO</strong>
+              </Td>
+              <Td>
+                SCM Hub가 SAP에 push (start-point quantity 등). 우리는 직접 X
+              </Td>
+              <Td>
+                ❌ 해외지사 SAP 없음 → 해당 없음
+              </Td>
+              <Td>SAP 단 가공(원가/finance)은 SAP+개발사 책임</Td>
             </tr>
             <tr style={tr}>
               <Td>
                 <strong>PLM PO</strong>
               </Td>
               <Td>
-                <Tbd>병행 사용 가능성</Tbd>
+                <Tbd>국내 사용 여부 TBD</Tbd>
               </Td>
               <Td>
-                <Tbd>주 PO 채널 후보 2 — 우선 연동 대상</Tbd>
+                <span
+                  style={{
+                    display: "inline-block",
+                    padding: "2px 6px",
+                    background: "#dbeafe",
+                    color: "#1e40af",
+                    borderRadius: 4,
+                    fontSize: 11,
+                    fontWeight: 700,
+                  }}
+                >
+                  🟢 우선 연동
+                </span>{" "}
+                — 해외지사 PO 발행 시작점
               </Td>
-              <Td>해외지사 PO 발행 시작점일 가능성 큼</Td>
+              <Td>해외지사 첫 번째 작업</Td>
             </tr>
           </tbody>
         </table>
         <p style={{ ...p, marginTop: 12, color: "#374151" }}>
-          → 위 3채널의 사용 시점/우선순위 정리 후 PLM PO 우선 연동 시작.
+          → <strong>국내</strong>: SCM Hub PO 단일화 → SCM Hub가 SAP로 송신.{" "}
+          <strong>해외지사</strong>: PLM PO 우선 연동, SAP 없음.
         </p>
       </section>
 
@@ -178,16 +205,16 @@ export default function OverseasFlowPage() {
             ❌ <strong>ReadyKorea 관세사 입력</strong> — 한국 관세사 작업 없음
           </li>
           <li>
-            ❌ <strong>SAP 송신</strong> — 해외지사에 SAP 없음
+            ❌ <strong>SAP 적재</strong> — 해외지사에 SAP 없음 (SCM Hub→SAP 라인 미적용)
           </li>
           <li>
-            ❌ <strong>Data Mart → SCM Hub → SAP</strong> 라인 — 해당 사항 없음
+            ❌ <strong>SCM Hub PO 단일화</strong> — 국내 전제. 해외지사는 PLM PO 우선
           </li>
           <li>
             ✅ <strong>Forwarder + SeaVantage</strong>는 동일하게 사용
           </li>
           <li>
-            ❓ <strong>해외지사 자체 ERP/시스템</strong>이 있다면 그쪽으로 송신 필요할 수도 (TBD)
+            ❓ <strong>해외지사 자체 시스템 / 송신처</strong> — 도착 후 어디로 데이터 넘기는지 TBD
           </li>
         </ul>
       </Section>

@@ -11,8 +11,8 @@ export default function CargoFlowPage() {
     {
       key: "po",
       label: "1. PO 발행",
-      source: "Musinsa SCM",
-      description: "PO 발행 → 공급사에 전달",
+      source: "SCM Hub PO (단일화)",
+      description: "SCM Hub PO 발행 → 공급사에 전달. 2026년 단일화 목표",
       status: "TBD",
     },
     {
@@ -58,10 +58,11 @@ export default function CargoFlowPage() {
       status: "TBD",
     },
     {
-      key: "sap",
-      label: "8. SAP 송신",
-      source: "Data Mart → SCM Hub → SAP",
-      description: "정제 데이터를 사내 SCM Hub로 송신",
+      key: "scmhub",
+      label: "8. SCM Hub 송신",
+      source: "Data Mart → SCM Hub",
+      description:
+        "정제 데이터를 사내 SCM Hub로 송신 (이 hub의 종착지). SAP 적재는 SCM Hub가 책임",
       status: "TBD",
     },
   ];
