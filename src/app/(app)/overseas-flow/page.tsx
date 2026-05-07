@@ -235,6 +235,157 @@ export default function OverseasFlowPage() {
         </p>
       </section>
 
+      {/* 소싱·무역팀 역할 분담 */}
+      <section
+        style={{
+          ...section,
+          background: "#faf5ff",
+          border: "1px solid #e9d5ff",
+        }}
+      >
+        <h2 style={{ ...h2, color: "#6b21a8" }}>🎯 소싱 · 무역팀 역할 분담</h2>
+        <p style={{ ...p, fontSize: 12.5 }}>
+          해외지사 화물의 운영은 <strong>Ex-Factory를 기준으로 두 팀의 책임이 명확히 분리</strong>.
+          이 분업이 작동해야 삼국거래의 빠른 직배송 + 단순 통관이 실제로 굴러감.
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 }}>
+          {/* 소싱 카드 */}
+          <div
+            style={{
+              background: "white",
+              border: "1px solid #e9d5ff",
+              borderRadius: 8,
+              padding: 12,
+            }}
+          >
+            <h3 style={{ ...h3, color: "#6b21a8", marginTop: 0 }}>
+              ① 소싱 (Sourcing) — Ex-Factory 이전 책임
+            </h3>
+            <ul style={{ ...list, fontSize: 12, paddingLeft: 18 }}>
+              <li>
+                무탠이 물량 대부분 차지 — 글로벌 관리 (대만/일본/무탠 통합)
+              </li>
+              <li>
+                각 국가별 요구사항 관리: <strong>라벨링 · 부자재 · 패키징</strong>
+              </li>
+              <li>
+                <strong>공동납기 조율</strong> — 일본·대만 필두 → 동남아까지 마켓 니즈에 맞는
+                상품화 완성 단계
+              </li>
+              <li>
+                완성품 출하까지 책임 (마도 잡고 생산 완료까지)
+              </li>
+              <li>
+                각 국가가 한꺼번에 합쳐 사는 상황 X — 개별 마켓 니즈 + 공동납기로 효율화
+              </li>
+            </ul>
+          </div>
+
+          {/* 무역팀 카드 */}
+          <div
+            style={{
+              background: "white",
+              border: "1px solid #e9d5ff",
+              borderRadius: 8,
+              padding: 12,
+            }}
+          >
+            <h3 style={{ ...h3, color: "#6b21a8", marginTop: 0 }}>
+              ② 무역팀 (Logistics) — Ex-Factory 이후 책임
+            </h3>
+            <ul style={{ ...list, fontSize: 12, paddingLeft: 18 }}>
+              <li>
+                각 법인 물류 + 한국 무역팀이 콘솔리데이터 · Forwarder · 선사와 협업
+              </li>
+              <li>
+                <strong>FOB 단위 → 최적 컨테이너화</strong> (가장 효율적인 적재 방식 합의)
+              </li>
+              <li>
+                콘솔리데이터 · Forwarder를 통한 운임 정산
+              </li>
+              <li>
+                <strong>정보를 법인 판매계획에 반영</strong>할 수 있도록 가시화 — 이 hub의 역할
+              </li>
+              <li>
+                삼국거래 결제 + 통관 절차 조율
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 분업 장점 */}
+        <div
+          style={{
+            marginTop: 14,
+            padding: 12,
+            background: "#fff",
+            border: "1px solid #d8b4fe",
+            borderRadius: 8,
+          }}
+        >
+          <h3 style={{ ...h3, color: "#6b21a8", marginTop: 0 }}>
+            🛡️ 이 분업 구조의 장점 — Single-Shipper Container
+          </h3>
+          <p style={{ fontSize: 12.5, color: "#374151", margin: "0 0 8px", lineHeight: 1.6 }}>
+            일반 LCL/콘솔은 컨테이너 하나에 <strong>수십 개 화주사</strong>가 섞여서 →{" "}
+            페이먼트·통관·서류·책임이 <strong>화주마다 따로</strong> 처리되어 복잡도 폭발.
+          </p>
+          <p style={{ fontSize: 12.5, color: "#374151", margin: 0, lineHeight: 1.6 }}>
+            우리 구조는 <strong>무신사 ↔ 무신사 거래만</strong>으로 통일됨 → 같은 컨테이너 안의
+            화물도 <strong>단일 화주(무신사)</strong>로 묶여 페이먼트 1회·통관 1회로 처리되고,
+            컨테이너 효율도 극대화 (FCL 경쟁력 확보).
+          </p>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 8,
+              marginTop: 10,
+              fontSize: 11.5,
+            }}
+          >
+            <div
+              style={{
+                padding: "8px 10px",
+                background: "#fef2f2",
+                border: "1px solid #fecaca",
+                borderRadius: 6,
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "#991b1b", marginBottom: 4 }}>
+                일반 Multi-Shipper 콘솔
+              </div>
+              <ul style={{ margin: 0, paddingLeft: 16, color: "#7f1d1d", lineHeight: 1.5 }}>
+                <li>화주별 페이먼트 N회</li>
+                <li>화주별 통관 N회</li>
+                <li>서류·책임 분산 → 분쟁 多</li>
+                <li>지연 1건 → 컨테이너 전체 영향</li>
+              </ul>
+            </div>
+            <div
+              style={{
+                padding: "8px 10px",
+                background: "#f0fdf4",
+                border: "1px solid #bbf7d0",
+                borderRadius: 6,
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "#166534", marginBottom: 4 }}>
+                무신사 Single-Shipper 구조
+              </div>
+              <ul style={{ margin: 0, paddingLeft: 16, color: "#14532d", lineHeight: 1.5 }}>
+                <li>페이먼트 1회 (무신사 ↔ 무신사)</li>
+                <li>통관 1회</li>
+                <li>책임 단일 → 분쟁 단순화</li>
+                <li>FCL 효율 극대화 + 비용 절감</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* PO 연동 매트릭스 */}
       <section style={section}>
         <h2 style={h2}>PO 연동 매트릭스 (현실 반영)</h2>
