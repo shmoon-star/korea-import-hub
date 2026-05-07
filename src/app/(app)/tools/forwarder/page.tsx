@@ -112,6 +112,33 @@ export default function ForwarderPage() {
         />
       </Section>
 
+      <Section title="🆕 운임 / Billing 데이터 (추가 수집 — 원가회계 반영용)">
+        <p style={p}>
+          <strong>국내 수입 화물의 실제 운임 청구 내역</strong>을 PO/BL/Container 단위로 받아옴.
+          이 데이터가 SAP 파이낸스 모듈로 흘러 원가회계에 반영. 거래 조건(FOB/CIF/DDP 등)에
+          따라 청구 항목 구성이 달라짐.
+        </p>
+        <Table
+          rows={[
+            ["청구 단위", "BL 단위 + 컨테이너별 분배 (PO 기준 다시 합산)"],
+            ["거래 조건", "FOB / CIF / DDP / DAP 등 — 항목 구성 결정"],
+            [
+              "운임 항목",
+              "해상운임(O/F) · BAF · CAF · EBS · LSS · CFS Charge · THC · 통관 부대비 등",
+            ],
+            ["국내 부대비", "내륙운송 · 보관료 · 검역 · 검사 — 별도 항목"],
+            ["청구서", "Invoice 번호 / 발행일 / 결제조건 / 통화 / 환율 — SAP 매칭 필수"],
+            ["Container별 분배", "여러 PO가 한 컨테이너에 적재 시 CBM/중량 비율로 안분"],
+            ["검증", "공급사 INV vs Forwarder Invoice 차이 — 케이스 대응"],
+          ]}
+        />
+        <p style={{ ...p, marginTop: 10, color: "#374151" }}>
+          → BL 단위로 모든 가격을 한눈에 보여줘서 <strong>케이스 대응 / 비용 검증</strong>이 가능해야 함.
+          이 데이터는 <a href="/data-mart" style={{ color: "#2563eb" }}>/data-mart</a>에 적재되어
+          SCM Hub → SAP로 송신.
+        </p>
+      </Section>
+
       <Section title="E2E에 문의해서 받아야 할 정보 (체크리스트)">
         <Checklist
           items={[

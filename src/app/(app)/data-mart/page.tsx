@@ -52,24 +52,59 @@ export default function DataMartPage() {
         />
       </Section>
 
-      <Section title="우리가 송신할 데이터 (가설)">
+      <Section title="우리가 송신할 데이터 (2가지 카테고리)">
         <p style={p}>
-          우리가 채워주는 것은 외부 채널 발 정보. SCM Hub가 그 위에 PO/WMS/SAP를 얹음.
+          <strong>① 운영 데이터</strong> (PO 진행 추적용) +{" "}
+          <strong>② 원가/Finance 데이터</strong> (실제 가격·세액·운임 — SAP 파이낸스 모듈 직결)
         </p>
+
+        <h3 style={h3}>① 운영 데이터 — PO 진행/상태</h3>
         <Table
           rows={[
             ["PO 식별", "PO# / SKU# / Color / Size — Forwarder PF 기준 (또는 SCM Hub PO와 매칭)"],
             ["CRD", "Cargo Ready Date / 수량 / CBM / 중량 / 포장 — Forwarder"],
             ["Booking", "Vessel / Voyage / POL / POD / ETD / ETA — Forwarder + SeaVantage"],
             ["BL", "MBL / HBL / Carrier code — Forwarder Booking Confirmation"],
-            ["통관", "화물관리번호 / 진행상태 / 통관진행상태 / 입항일 — UNI-PASS"],
-            ["관세사 입력", "신고번호 / 세액 / 메모 — ReadyKorea (TBD)"],
+            ["통관 진행", "화물관리번호 / 진행상태 / 통관진행상태 / 입항일 — UNI-PASS"],
+            ["관세사 진행", "신고번호 / 진행 단계 / 메모 — ReadyKorea"],
             ["문서", "INV / PKG / Export Decl URL 또는 binary — Forwarder"],
           ]}
         />
+
+        <h3 style={{ ...h3, marginTop: 18 }}>
+          🆕 ② 원가 / Finance 데이터 — 실제 가격 (SAP 파이낸스 모듈로 직결)
+        </h3>
+        <p style={p}>
+          국내 수입 화물의 진짜 원가는{" "}
+          <strong>운송료(Forwarder) + 신고가격·세액(ReadyKorea)</strong>이 합쳐져야 결정됨.
+          이 데이터가 SAP 부킹 + 원가회계에 반영.
+        </p>
+        <Table
+          rows={[
+            [
+              "운임 — BL 단위",
+              "해상운임 / BAF / CAF / EBS / LSS / CFS / THC / 부대비 등 항목별",
+            ],
+            ["운임 — Container 분배", "여러 PO가 한 컨테이너 시 CBM/중량 비율 안분"],
+            ["거래 조건", "FOB / CIF / DDP / DAP — 청구 항목 구성 결정"],
+            ["Forwarder Invoice", "INV 번호 / 발행일 / 결제조건 / 통화 / 환율"],
+            [
+              "신고 가격 (라인별)",
+              "PO/SKU 라인별 단가 / 수량 / USD / 환율 / KRW — ReadyKorea",
+            ],
+            ["세액", "관세 / 부가세 / 기타 (라인별 분리) — ReadyKorea"],
+            ["HS code / FTA", "라인별 HS / 협정세율 적용 여부 — ReadyKorea"],
+            ["원가 매칭", "공급사 INV vs Forwarder INV 차이 검증 — 케이스 대응"],
+          ]}
+        />
+        <p style={{ ...p, marginTop: 10, color: "#374151" }}>
+          → 이 두 카테고리가 합쳐서 SCM Hub로 송신 → SCM Hub가 SAP에 부킹.{" "}
+          <strong>해외법인 화물</strong>은 현재 PO 채널 미정으로 별도 논의 (이 매트릭스 적용 보류).
+        </p>
+
         <p style={{ ...p, marginTop: 8, color: "#6b7280", fontSize: 12 }}>
           ※ <strong>SCM Hub가 들고 있는 것 (우리 영역 밖)</strong>: SAP PO / WMS 입출고 / 재고 /
-          finance·원가 — 이쪽 데이터는 SCM Hub와 join할 키만 맞춰주면 됨.
+          최종 원가회계·finance 가공 — 이쪽 데이터는 SCM Hub와 join할 키만 맞춰주면 됨.
         </p>
       </Section>
 
@@ -120,6 +155,14 @@ export default function DataMartPage() {
 }
 
 const p: React.CSSProperties = { fontSize: 13, lineHeight: 1.7, color: "#374151", margin: 0 };
+const h3: React.CSSProperties = {
+  fontSize: 12.5,
+  fontWeight: 700,
+  color: "#374151",
+  margin: "10px 0 8px",
+  paddingBottom: 4,
+  borderBottom: "1px solid #f3f4f6",
+};
 const list: React.CSSProperties = {
   paddingLeft: 20,
   fontSize: 13,

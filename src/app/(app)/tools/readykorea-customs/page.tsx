@@ -88,7 +88,8 @@ export default function ReadyKoreaCustomsPage() {
           </li>
           <li>
             <strong>DB 테이블 가설</strong>: <code>readykorea_customs_watch</code> +{" "}
-            <code>readykorea_customs_watch_snapshot</code> — UNI-PASS와 동일 패턴
+            <code>readykorea_customs_watch_snapshot</code> + <code>readykorea_customs_line</code>{" "}
+            (라인별 신고 가격용) — UNI-PASS 패턴 + 라인 확장
           </li>
           <li>
             <strong>UNI-PASS와의 키 매핑</strong>: MBL/HBL/화물관리번호 중 무엇이 ReadyKorea에서 unique 키인지에
@@ -98,6 +99,50 @@ export default function ReadyKoreaCustomsPage() {
             <strong>UI</strong>: 현재 Customs Tracking과 같은 형태 — 즉시조회 + Watchlist + 이력
           </li>
         </ul>
+      </Section>
+
+      <Section title="🆕 신고 가격 / 세액 — 라인별 (원가회계 반영용)">
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: "#374151", margin: 0 }}>
+          통관 시 <strong>관세사가 신고하는 가격을 PO/SKU 라인 단위</strong>로 받아옴. UNI-PASS의
+          헤더 단위와 달리 ReadyKorea는 <strong>라인 디테일까지 접근 가능</strong>한 것이 핵심
+          가치. <strong>조사/감사 대응</strong>에서 SKU별 신고 가격이 필요하기 때문.
+        </p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "200px 1fr",
+            gap: 8,
+            fontSize: 12.5,
+            marginTop: 12,
+          }}
+        >
+          {[
+            ["수집 단위", "신고번호 → 라인 (PO# / SKU# / Color / Size)"],
+            ["라인별 가격", "단가 / 수량 / 신고 가격 (USD) / 환율 / 신고 가격 (KRW)"],
+            ["세액", "관세 / 부가세 / 기타 (특별소비세 등 — 품목별)"],
+            ["HS code", "라인별 분류 — 관세율 결정"],
+            ["원산지", "FTA 적용 여부 / 협정세율"],
+            ["신고서 링크", "ReadyKorea 시스템 내 신고서 deep-link (가능하면)"],
+            ["PO/SKU 매칭", "공급사 INV의 PO/SKU와 동일 키로 매칭 — 조사 대응 핵심"],
+          ].map(([k, v], i) => (
+            <div key={i} style={{ display: "contents" }}>
+              <div style={{ color: "#6b7280", fontWeight: 600, padding: "4px 0" }}>{k}</div>
+              <div style={{ color: "#1f2937", padding: "4px 0" }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <p
+          style={{
+            fontSize: 12.5,
+            lineHeight: 1.6,
+            color: "#374151",
+            margin: "12px 0 0",
+          }}
+        >
+          → 이 데이터가 <a href="/data-mart" style={{ color: "#2563eb" }}>/data-mart</a>에 쌓여
+          SAP 파이낸스 모듈로 가서 <strong>원가에 통관비/세액이 반영</strong>됨. Forwarder 운임 +
+          ReadyKorea 신고가격/세액이 합쳐서 진짜 원가가 결정.
+        </p>
       </Section>
 
       <Section title="다음 액션 (이 순서)">
