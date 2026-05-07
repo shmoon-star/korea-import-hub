@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import CustomsDetail from "@/components/CustomsDetail";
 
 type HeaderInfo = Record<string, string>;
 type Detail = Record<string, string>;
@@ -613,28 +614,10 @@ export default function CustomsTrackingPage() {
               </h3>
               <button onClick={() => setInfoRow(null)} style={{ ...miniBtn, fontSize: 14 }}>닫기</button>
             </div>
-            {!infoRow.cargo_info ? (
-              <div style={{ color: "#6b7280", fontSize: 13 }}>아직 조회된 상세 정보가 없습니다. "갱신"을 먼저 실행하세요.</div>
-            ) : (
-              <div style={headerGrid}>
-                {Object.entries(HEADER_LABELS).map(([key, label]) => {
-                  const val = infoRow.cargo_info?.[key];
-                  if (!val) return null;
-                  const displayVal =
-                    key.endsWith("Dt") || key.endsWith("Dttm") ? fmtDt(val) : val;
-                  return (
-                    <div key={key} style={headerRow}>
-                      <div style={headerKey}>{label}</div>
-                      <div style={headerVal}>{displayVal}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            <CustomsDetail cargoInfo={infoRow.cargo_info} />
           </div>
         </div>
       )}
-
       {/* 히스토리 모달 */}
       {historyId && (
         <div style={modalBackdrop} onClick={() => setHistoryId(null)}>
