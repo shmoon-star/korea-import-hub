@@ -63,9 +63,108 @@ export default function OverseasFlowPage() {
         🚧 <strong>전부 TBD</strong> — PO 연동 채널부터 정리 필요
       </Banner>
 
+      {/* 배경 / 운영 컨텍스트 */}
+      <section
+        style={{
+          ...section,
+          background: "#f9fafb",
+          border: "1px solid #d1d5db",
+        }}
+      >
+        <h2 style={h2}>📍 배경 — 해외지사 FOB 운영 현황</h2>
+        <ul style={{ ...list, fontSize: 12.5 }}>
+          <li>
+            무신사 협력 <strong>벤더 80+</strong>, <strong>공장 100+</strong> — 모든 곳을 직접
+            컨트롤 불가
+          </li>
+          <li>
+            중국·JV 같은 대규모는 자체 인력으로 관리 가능. 소규모 해외지사(일본/대만/베트남 등)는
+            <strong> 무역조직(한국)이 생산직 관리를 대신</strong> 해줘야 함
+          </li>
+          <li>
+            소규모 해외지사들은 <strong>FOB 거래</strong>를 원하는데, 직접 소싱·콘솔리데이션
+            관리가 어려워 무역조직 의존
+          </li>
+          <li>
+            운영 흐름: 베트남 등 출하지에서 화물 콘솔리데이션 → Forwarder와 비용 정산 →{" "}
+            <strong>삼국거래</strong>(한국 무신사 ↔ 일본/대만 무신사) 일회성 결제 → 출하
+          </li>
+          <li>
+            이 hub에서 해외지사용 화물에 해줄 수 있는 것 ={" "}
+            <strong>화물 흐름의 가시화</strong> (PO/원가 회계는 SAP 부재로 불가)
+          </li>
+        </ul>
+      </section>
+
+      {/* 시스템 한계 */}
+      <section
+        style={{
+          ...section,
+          background: "#fef2f2",
+          border: "1px solid #fecaca",
+        }}
+      >
+        <h2 style={{ ...h2, color: "#991b1b" }}>🚧 시스템 한계 (현재 환경)</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 8, fontSize: 12.5 }}>
+          {[
+            ["SAP MM", "❌ 사용 안 함 (전사 결정). 해외법인은 더더욱 SAP 자체가 없음"],
+            [
+              "PLM PO",
+              "⚠️ 가정 단계 — PLM에서 오더가 올라온다는 합의/보장이 아직 없음. 본 것도 Mootan 일부 케이스",
+            ],
+            ["PLM PO ≠ SAP MM", "PLM PO는 PMM을 대체할 수 없음. 매입 추적/원가 회계 기능 부재"],
+            ["일본 / 대만", "SAP 자체를 안 씀 → 해외법인 매입의 화물 추적 외 전산화 불가"],
+            [
+              "Mootan 외 매입",
+              "Mootan 외의 일반 매입은 PLM에도 안 올라올 가능성 높음 — 추적 사각지대",
+            ],
+          ].map(([k, v], i) => (
+            <div key={i} style={{ display: "contents" }}>
+              <div style={{ color: "#991b1b", fontWeight: 600, padding: "4px 0" }}>{k}</div>
+              <div style={{ color: "#7f1d1d", padding: "4px 0" }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <p style={{ ...p, marginTop: 10, color: "#7f1d1d" }}>
+          ⇒ 우리가 정직하게 할 수 있는 것은{" "}
+          <strong>Forwarder + Shipment Tracking 기반 화물 흐름 가시화</strong>까지. PO 단위 통합/원가는
+          시스템 환경이 갖춰지기 전엔 불가.
+        </p>
+      </section>
+
+      {/* 가능한 범위 */}
+      <section
+        style={{
+          ...section,
+          background: "#f0fdf4",
+          border: "1px solid #bbf7d0",
+        }}
+      >
+        <h2 style={{ ...h2, color: "#166534" }}>✅ 이 hub에서 가능한 것</h2>
+        <ul style={list}>
+          <li>
+            <strong>FOB 콘솔리데이션 가시화</strong> — 베트남 등 출하지에서 화물 모이는 과정 추적
+            (Forwarder PF)
+          </li>
+          <li>
+            <strong>운송 중 추적</strong> — Shipment Tracking (SeaVantage)으로 출항 → 도착까지
+            동일하게 사용
+          </li>
+          <li>
+            <strong>도착 후 상태</strong> — 해외지사 도착 시점 가시화 (한국 통관 단계는 적용 안 됨)
+          </li>
+          <li>
+            <strong>Forwarder 운임 수집</strong> — 비용 정산 자료로 활용 (SAP에 부킹 못 해도 보고서 가능)
+          </li>
+          <li>
+            <strong>삼국거래 결제 추적</strong> (선택) — 일회성 결제 이벤트만 별도 기록
+          </li>
+        </ul>
+      </section>
+
       {/* PO 연동 매트릭스 */}
       <section style={section}>
-        <h2 style={h2}>PO 연동 매트릭스 (정정)</h2>
+        <h2 style={h2}>PO 연동 매트릭스 (현실 반영)</h2>
         <table style={tbl}>
           <thead>
             <tr style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
@@ -97,21 +196,22 @@ export default function OverseasFlowPage() {
                 — 2026년 SCM Hub PO 단일화 목표. 우리 hub의 진실 source
               </Td>
               <Td>
-                <Tbd>후보 — 사내 사양 확인 필요</Tbd>
+                ❌ 해외지사 환경엔 SCM Hub 적용 X (현재)
               </Td>
               <Td>국내 데이터 모음의 종착지가 SCM Hub</Td>
             </tr>
             <tr style={tr}>
               <Td>
-                <strong>SAP PO</strong>
+                <strong>SAP PO / SAP MM</strong>
               </Td>
               <Td>
-                SCM Hub가 SAP에 push (start-point quantity 등). 우리는 직접 X
+                SCM Hub가 SAP에 push (start-point quantity 등). 우리는 직접 X.{" "}
+                <strong>SAP MM은 전사적으로 미사용</strong>
               </Td>
               <Td>
-                ❌ 해외지사 SAP 없음 → 해당 없음
+                ❌ 해외법인은 SAP 자체 부재 (일본/대만 등). 매입 전산화 경로 없음
               </Td>
-              <Td>SAP 단 가공(원가/finance)은 SAP+개발사 책임</Td>
+              <Td>SAP 단 가공(finance)은 SAP+개발사 책임</Td>
             </tr>
             <tr style={tr}>
               <Td>
@@ -121,28 +221,39 @@ export default function OverseasFlowPage() {
                 <Tbd>국내 사용 여부 TBD</Tbd>
               </Td>
               <Td>
+                <Tbd>가정 단계 — Mootan 일부만 PLM에 올라감. SAP MM 대체 불가</Tbd>
+              </Td>
+              <Td>전사적으로 PLM 오더 올라온다는 합의 미확정</Td>
+            </tr>
+            <tr style={tr}>
+              <Td>
+                <strong>실질적 진실 source</strong>
+              </Td>
+              <Td>SCM Hub PO + SAP (SCM Hub 경유)</Td>
+              <Td>
                 <span
                   style={{
                     display: "inline-block",
                     padding: "2px 6px",
-                    background: "#dbeafe",
-                    color: "#1e40af",
+                    background: "#fef3c7",
+                    color: "#92400e",
                     borderRadius: 4,
                     fontSize: 11,
                     fontWeight: 700,
                   }}
                 >
-                  🟢 우선 연동
+                  🟡 Forwarder PF
                 </span>{" "}
-                — 해외지사 PO 발행 시작점
+                — 출하 정보가 가장 먼저 잡히는 곳. PO 부재로 Forwarder 입력값을 임시 ID로 사용
               </Td>
-              <Td>해외지사 첫 번째 작업</Td>
+              <Td>현실적 작업 단위는 Forwarder Booking 기준</Td>
             </tr>
           </tbody>
         </table>
         <p style={{ ...p, marginTop: 12, color: "#374151" }}>
           → <strong>국내</strong>: SCM Hub PO 단일화 → SCM Hub가 SAP로 송신.{" "}
-          <strong>해외지사</strong>: PLM PO 우선 연동, SAP 없음.
+          <strong>해외지사</strong>: PO 진실 source 부재 → Forwarder Booking을 임시 키로 사용,
+          화물 흐름·운임 가시화에 집중.
         </p>
       </section>
 
@@ -219,13 +330,41 @@ export default function OverseasFlowPage() {
         </ul>
       </Section>
 
-      <Section title="다음 액션 (확인 필요)">
+      <Section title="다음 액션 (현실 반영 우선순위)">
         <ol style={list}>
-          <li>해외지사 화물 비중 — 전체 중 몇 %?</li>
-          <li>현재 PO 발행 흐름 — PLM/SCM Hub 중 무엇이 출발점?</li>
-          <li>해외지사 도착 후 데이터를 받아서 무엇을 해야 하나? (ERP 송신? 보고서? 두 곳?)</li>
-          <li>PLM PO API 사양 (사내 시스템) 확인</li>
+          <li>
+            <strong>1순위</strong>: Forwarder PF 연동으로 FOB 콘솔리데이션 가시화 → 해외지사
+            담당자가 출하 진행 상황을 실시간 확인
+          </li>
+          <li>
+            <strong>2순위</strong>: SeaVantage로 출항·운송·도착 추적 (국내와 동일)
+          </li>
+          <li>
+            <strong>3순위</strong>: Forwarder 운임 데이터 수집 — 비용 정산 보고서 (SAP 미연동
+            상태로도 엑셀/CSV로 활용)
+          </li>
+          <li>
+            <strong>4순위 (선택)</strong>: 삼국거래 결제 이벤트 별도 기록
+          </li>
+          <li>
+            <strong>대기</strong>: PLM PO 합의 진행 상황 모니터 — 가정이 아닌 합의로 굳어지면
+            그때 PO 키 매핑 추가
+          </li>
         </ol>
+        <p
+          style={{
+            ...p,
+            marginTop: 10,
+            color: "#374151",
+            background: "#fffbeb",
+            border: "1px solid #fde68a",
+            padding: "8px 10px",
+            borderRadius: 6,
+          }}
+        >
+          💡 해외지사 운영의 핵심 가치는 "PO 통합"이 아니라 "
+          <strong>화물·운임 가시성 + 정산 자료</strong>". SAP/PLM 가정에 매이지 말고 실현 가능한 것부터.
+        </p>
       </Section>
     </div>
   );
