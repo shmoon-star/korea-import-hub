@@ -13,6 +13,14 @@ const groups: Group[] = [
       { href: "/tools/customs-tracking", label: "Customs Tracking", sub: "수입 통관 진행 (UNI-PASS)" },
       { href: "/tools/shipment-tracking", label: "Shipment Tracking", sub: "사선사 트래킹 (SeaVantage)" },
       { href: "/tools/readykorea-customs", label: "ReadyKorea 통관", sub: "관세사 입력 정보 (xTrade)" },
+      { href: "/tools/forwarder", label: "Forwarder", sub: "Consolidator + Forwarder PF (TBD)" },
+      { href: "/tools/airplane-tracking", label: "Airplane Tracking", sub: "항공 화물 추적 (TBD)" },
+    ],
+  },
+  {
+    label: "ERP",
+    items: [
+      { href: "/tools/sap", label: "SAP", sub: "SAP PO 연동 (TBD)" },
     ],
   },
 ];
