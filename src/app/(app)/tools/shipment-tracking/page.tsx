@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import CargoDetail from "@/components/CargoDetail";
 
 // Carrier code 4자리 — 추후 SeaVantage 전체 리스트 받으면 확장
 const CARRIERS: { code: string; name: string }[] = [
@@ -327,30 +328,8 @@ export default function ShipmentTrackingPage() {
         )}
 
         {qResult && (
-          <div
-            style={{
-              marginTop: 12,
-              padding: 12,
-              background: "#f9fafb",
-              border: "1px solid #e5e7eb",
-              borderRadius: 6,
-              fontSize: 12,
-              maxHeight: 400,
-              overflow: "auto",
-            }}
-          >
-            <div style={{ marginBottom: 8 }}>
-              <strong>BL Status:</strong> {qResult.blStatus ?? "-"}
-              {" / "}
-              <strong>ETD:</strong> {qResult.initialEtd ?? "-"}
-              {" / "}
-              <strong>ETA:</strong> {qResult.initialEta ?? "-"}
-              {" / "}
-              <strong>Locations:</strong> {qResult.locations?.length ?? 0}
-            </div>
-            <pre style={{ whiteSpace: "pre-wrap", margin: 0 }}>
-              {JSON.stringify(qResult, null, 2)}
-            </pre>
+          <div style={{ marginTop: 14 }}>
+            <CargoDetail data={qResult} />
           </div>
         )}
       </section>
@@ -592,22 +571,16 @@ export default function ShipmentTrackingPage() {
         </Modal>
       )}
 
-      {/* ─────── 정보 모달 (cargo_info raw) ─────── */}
+      {/* ─────── 정보 모달 (cargo_info 구조화 표시) ─────── */}
       {infoFor && (
         <Modal onClose={() => setInfoFor(null)} title={`상세 정보 — ${infoFor.carrier_code}`}>
-          <pre
-            style={{
-              fontSize: 11,
-              whiteSpace: "pre-wrap",
-              background: "#f9fafb",
-              padding: 12,
-              borderRadius: 6,
-              maxHeight: 500,
-              overflow: "auto",
-            }}
-          >
-            {JSON.stringify(infoFor.cargo_info ?? {}, null, 2)}
-          </pre>
+          {infoFor.cargo_info ? (
+            <CargoDetail data={infoFor.cargo_info} />
+          ) : (
+            <div style={{ padding: 20, textAlign: "center", color: "#9ca3af" }}>
+              아직 응답 데이터가 없습니다 — &quot;갱신&quot; 버튼을 눌러 SeaVantage에서 정보를 가져오세요.
+            </div>
+          )}
         </Modal>
       )}
     </div>
