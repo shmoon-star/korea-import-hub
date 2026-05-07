@@ -328,13 +328,14 @@ export default function OverseasFlowPage() {
             🛡️ 이 분업 구조의 장점 — Single-Shipper Container
           </h3>
           <p style={{ fontSize: 12.5, color: "#374151", margin: "0 0 8px", lineHeight: 1.6 }}>
-            일반 LCL/콘솔은 컨테이너 하나에 <strong>수십 개 화주사</strong>가 섞여서 →{" "}
-            페이먼트·통관·서류·책임이 <strong>화주마다 따로</strong> 처리되어 복잡도 폭발.
+            일반 LCL/콘솔은 컨테이너 하나에 <strong>수십 개 벤더사</strong>가 섞여서 →{" "}
+            페이먼트·통관·서류·책임이 <strong>벤더마다 따로</strong> 처리되어 복잡도 폭발.
           </p>
           <p style={{ fontSize: 12.5, color: "#374151", margin: 0, lineHeight: 1.6 }}>
-            우리 구조는 <strong>무신사 ↔ 무신사 거래만</strong>으로 통일됨 → 같은 컨테이너 안의
-            화물도 <strong>단일 화주(무신사)</strong>로 묶여 페이먼트 1회·통관 1회로 처리되고,
-            컨테이너 효율도 극대화 (FCL 경쟁력 확보).
+            우리 구조는 거래를{" "}
+            <strong>무신사 한국 ↔ 무신사 일본 (또는 대만·기타 해외지사) 거래로만 통일</strong> →
+            같은 컨테이너 안의 화물도 <strong>단일 화주(무신사 한국)</strong>로 묶여 페이먼트 1회·
+            통관 1회로 처리되고, 컨테이너 효율도 극대화 (FCL 경쟁력 확보).
           </p>
 
           <div
@@ -358,8 +359,8 @@ export default function OverseasFlowPage() {
                 일반 Multi-Shipper 콘솔
               </div>
               <ul style={{ margin: 0, paddingLeft: 16, color: "#7f1d1d", lineHeight: 1.5 }}>
-                <li>화주별 페이먼트 N회</li>
-                <li>화주별 통관 N회</li>
+                <li>벤더별 페이먼트 N회</li>
+                <li>벤더별 통관 N회</li>
                 <li>서류·책임 분산 → 분쟁 多</li>
                 <li>지연 1건 → 컨테이너 전체 영향</li>
               </ul>
@@ -376,7 +377,7 @@ export default function OverseasFlowPage() {
                 무신사 Single-Shipper 구조
               </div>
               <ul style={{ margin: 0, paddingLeft: 16, color: "#14532d", lineHeight: 1.5 }}>
-                <li>페이먼트 1회 (무신사 ↔ 무신사)</li>
+                <li>페이먼트 1회 (무신사 한국 ↔ 무신사 일본/대만)</li>
                 <li>통관 1회</li>
                 <li>책임 단일 → 분쟁 단순화</li>
                 <li>FCL 효율 극대화 + 비용 절감</li>
