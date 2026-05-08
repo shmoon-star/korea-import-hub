@@ -3,10 +3,60 @@
 import { useEffect, useState } from "react";
 import CargoDetail from "@/components/CargoDetail";
 
-// Carrier code 4자리 — 추후 SeaVantage 전체 리스트 받으면 확장
+// Carrier code 4자리 — SeaVantage Supported Carrier 전체 리스트 (50개)
+// 출처: Monday.com 보드 "🚢 Supported Carrier"
+// 동일 코드 다중 alias 보존 (예: CMAL = CMA CGM/APL/ANL/CNC)
 const CARRIERS: { code: string; name: string }[] = [
+  { code: "CBMC", name: "SinoTrans" },
+  { code: "PCLU", name: "Pan Continental" },
+  { code: "CKCO", name: "CK Line" },
+  { code: "PCSL", name: "Dong Young Shipping" },
+  { code: "CMAL", name: "CMA CGM" },
+  { code: "POBU", name: "Pan Ocean" },
+  { code: "COSU", name: "COSCO" },
+  { code: "SCLK", name: "SITC" },
+  { code: "DJSC", name: "Dongjin Shipping" },
+  { code: "SMLM", name: "SM Line" },
+  { code: "SNKO", name: "Sinokor" },
+  { code: "EVER", name: "Evergreen" },
+  { code: "TSLU", name: "T.S Lines" },
+  { code: "FSCO", name: "FESCO" },
+  { code: "WHLU", name: "Wanhai" },
+  { code: "HASL", name: "Heung-A Shipping" },
+  { code: "WWSU", name: "WESTWOOD SHIPPING LINES" },
+  { code: "HDMU", name: "HMM" },
+  { code: "HLCU", name: "Hapag-Lloyd" },
+  { code: "HSLI", name: "Hansung Line" },
+  { code: "KMTC", name: "KMTC" },
   { code: "MAEU", name: "Maersk" },
-  // TODO: SeaVantage 담당자에게 전체 리스트 받아서 추가
+  { code: "MAEU", name: "Sealand" },
+  { code: "MSCU", name: "MSC" },
+  { code: "YMLU", name: "Yang Ming" },
+  { code: "NSSL", name: "Namsung Shipping" },
+  { code: "ZIMU", name: "ZIM" },
+  { code: "ONEY", name: "ONE" },
+  { code: "OOLU", name: "OOCL" },
+  { code: "CMAL", name: "APL" },
+  { code: "CMAL", name: "ANL" },
+  { code: "CMAL", name: "CNC" },
+  { code: "PCIU", name: "PIL" },
+  { code: "ESPU", name: "EMIRATES SHIPPING" },
+  { code: "GOSU", name: "GOLD STAR LINE" },
+  { code: "RCLK", name: "RCL Group" },
+  { code: "PCIU", name: "Mariana Express Lines" },
+  { code: "IAAU", name: "Interasia" },
+  { code: "CHVW", name: "SWIRE SHIPPING" },
+  { code: "CULU", name: "CULINES" },
+  { code: "MATS", name: "MATSON" },
+  { code: "CLCL", name: "Camellia Line" },
+  { code: "TSHG", name: "TAILWIND" },
+  { code: "SJHH", name: "SeaLead" },
+  { code: "HOEG", name: "Hoegh Autoliners" },
+  { code: "HDGL", name: "Hyundai Glovis" },
+  { code: "WLWH", name: "Wallenius Wilhelmsen" },
+  { code: "EUKO", name: "EUKOR" },
+  { code: "11WJ", name: "JJ Shipping" },
+  { code: "ELOU", name: "MACS" },
 ];
 
 type WatchRow = {
